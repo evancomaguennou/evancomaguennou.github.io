@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boîtes EPI — Evan COMA-GUENNOU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F5F3EF; --surface: #ECEAE4; --ink: #1A1916;
+      --ink-muted: #6B6860; --accent: #C4440A; --accent-light: #F5EDE8;
+      --line: #D4D0C8; --white: #FAFAF8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(245,243,239,0.94); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 62px;
+    }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--ink); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-back { font-size: 0.85rem; font-weight: 500; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    /* HERO */
+    .page-hero {
+      padding: 100px 6vw 0;
+      background: var(--surface);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      min-height: 70vh;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 22px, var(--line) 22px, var(--line) 23px);
+      opacity: 0.3;
+    }
+    .hero-left { position: relative; z-index: 1; padding-bottom: 60px; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 1.2rem; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .page-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 0.28rem 0.8rem; border-radius: 2px; margin-bottom: 1rem; }
+    .page-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 3.5vw, 3rem); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem; }
+    .page-desc { font-size: 0.95rem; color: var(--ink-muted); max-width: 480px; line-height: 1.75; margin-bottom: 1.5rem; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .meta-badge { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 500; background: var(--white); border: 1px solid var(--line); padding: 0.35rem 0.8rem; border-radius: 4px; }
+    .hero-right { position: relative; z-index: 1; align-self: stretch; display: flex; align-items: flex-end; }
+    .hero-img { width: 100%; max-height: 440px; object-fit: cover; object-position: center; display: block; border-radius: 8px 8px 0 0; box-shadow: 0 -8px 40px rgba(26,25,22,0.12); }
+
+    /* CONTENT */
+    .content { max-width: 900px; margin: 0 auto; padding: 60px 6vw; }
+    .block { margin-bottom: 3.5rem; }
+    .block-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.3rem; margin-bottom: 0.4rem; }
+    .block-bar { width: 30px; height: 3px; background: var(--accent); margin-bottom: 1.5rem; }
+
+    /* GALERIE */
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .gallery-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .gallery-img:hover { transform: scale(1.02); box-shadow: 0 8px 24px rgba(26,25,22,0.12); }
+    .gallery-img.wide { grid-column: span 2; aspect-ratio: 16/7; }
+
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; align-items: center; justify-content: center; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
+    .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; color: white; font-size: 2rem; cursor: pointer; line-height: 1; }
+
+    /* CONTEXTE */
+    .context-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem; }
+    .context-card { background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 1.4rem; }
+    .context-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .context-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; }
+    .context-sub { font-size: 0.82rem; color: var(--ink-muted); margin-top: 0.2rem; }
+
+    /* ÉTAPES */
+    .steps { display: flex; flex-direction: column; gap: 1.2rem; }
+    .step { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--white); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .step-desc { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.65; }
+
+    /* TAGS */
+    .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .tag { font-size: 0.72rem; font-weight: 600; background: var(--accent-light); color: var(--accent); padding: 0.22rem 0.65rem; border-radius: 3px; }
+
+    /* NAV PROJETS */
+    .projects-nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem 0; border-top: 1px solid var(--line); }
+    .proj-nav-btn { font-size: 0.875rem; font-weight: 500; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .proj-nav-btn:hover { color: var(--accent); }
+
+    footer { background: var(--ink); color: #605C56; text-align: center; padding: 1.5rem 6vw; font-size: 0.8rem; }
+    footer span { color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .page-hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { display: none; }
+      .gallery { grid-template-columns: 1fr; }
+      .gallery-img.wide { grid-column: span 1; aspect-ratio: 4/3; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Evan <span>CG</span></a>
+  <a href="index.html#projets" class="nav-back">← Retour aux projets</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-left">
+    <div class="breadcrumb">
+      <a href="index.html">Portfolio</a> › <a href="index.html#projets">Projets</a> › Boîtes EPI
+    </div>
+    <div class="page-tag">Fabrication FabLab · PA.COTTE</div>
+    <h1 class="page-title">Boîtes de rangement<br>EPI en contreplaqué</h1>
+    <p class="page-desc">Conception, découpe laser et assemblage de boîtes personnalisées pour le rangement des Équipements de Protection Individuelle du FabLab PA.COTTE.</p>
+    <div class="hero-meta">
+      <div class="meta-badge">📅 2024 – 2025</div>
+      <div class="meta-badge">🏭 PA.COTTE FabLab</div>
+      <div class="meta-badge">🔆 Découpe laser Trotec</div>
+      <div class="meta-badge">🪵 Contreplaqué</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="epi-boite-1.jpg" alt="Boîte EPI Evan" class="hero-img" />
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- GALERIE -->
+  <div class="block">
+    <div class="block-title">Galerie photos</div>
+    <div class="block-bar"></div>
+    <div class="gallery">
+      <img src="epi-boite-1.jpg" alt="Boîte EPI vue de face" class="gallery-img" onclick="openLightbox(this.src)" />
+      <img src="epi-boite-4.jpg" alt="Boîte EPI vue de dessus" class="gallery-img" onclick="openLightbox(this.src)" />
+      <img src="epi-boite-3.jpg" alt="Contenu de la boîte EPI" class="gallery-img" onclick="openLightbox(this.src)" />
+      <img src="epi-boite-2.jpg" alt="Ensemble des boîtes EPI sur étagère" class="gallery-img" onclick="openLightbox(this.src)" />
+    </div>
+  </div>
+
+  <!-- CONTEXTE -->
+  <div class="block">
+    <div class="block-title">Contexte du projet</div>
+    <div class="block-bar"></div>
+    <div class="context-grid">
+      <div class="context-card">
+        <div class="context-label">Lieu</div>
+        <div class="context-value">FabLab PA.COTTE</div>
+        <div class="context-sub">Sainte-Luce-sur-Loire</div>
+      </div>
+      <div class="context-card">
+        <div class="context-label">Objectif</div>
+        <div class="context-value">Rangement EPI</div>
+        <div class="context-sub">Organiser et identifier les équipements de protection</div>
+      </div>
+      <div class="context-card">
+        <div class="context-label">Matériau</div>
+        <div class="context-value">Contreplaqué</div>
+        <div class="context-sub">Découpe et gravure laser Trotec</div>
+      </div>
+      <div class="context-card">
+        <div class="context-label">Résultat</div>
+        <div class="context-value">Série de boîtes</div>
+        <div class="context-sub">Déployées dans le FabLab, une par collaborateur</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="block">
+    <div class="block-title">Description</div>
+    <div class="block-bar"></div>
+    <p style="font-size:0.95rem;color:var(--ink-muted);line-height:1.8;max-width:680px;">
+      Dans le cadre de mon alternance au FabLab de PA.COTTE, j'ai conçu et fabriqué une série de boîtes en contreplaqué destinées à organiser les Équipements de Protection Individuelle (EPI) de chaque collaborateur. Chaque boîte est personnalisée avec le nom du collaborateur et les pictogrammes des EPI correspondants, gravés au laser. La structure en assemblage par emboîtement (finger joint) ne nécessite aucune vis ni colle, garantissant une fabrication simple, rapide et reproductible. Les boîtes sont dotées d'une poignée découpée pour faciliter la manipulation, d'un couvercle coulissant et d'un séparateur interne pour distinguer chaussures de sécurité et autres EPI (casque anti-bruit, lunettes, gants).
+    </p>
+  </div>
+
+  <!-- DÉMARCHE -->
+  <div class="block">
+    <div class="block-title">Démarche de fabrication</div>
+    <div class="block-bar"></div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Analyse du besoin</div>
+          <div class="step-desc">Identifier les EPI à ranger par collaborateur, définir les dimensions nécessaires pour accueillir chaussures de sécurité et petits équipements (lunettes, gants, casque anti-bruit).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Conception du fichier de découpe</div>
+          <div class="step-desc">Dessin des pièces en 2D avec assemblage par finger joint (encoches). Intégration des gravures — lettrage "EPI", nom du collaborateur, pictogrammes des équipements.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Découpe et gravure laser</div>
+          <div class="step-desc">Utilisation de la découpeuse laser Trotec du FabLab PA.COTTE. Découpe des pièces en contreplaqué et gravure des éléments graphiques en une seule opération.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Assemblage & déploiement</div>
+          <div class="step-desc">Assemblage par emboîtement des pièces sans outillage. Mise en place des boîtes sur les étagères du FabLab, une par collaborateur, avec les EPI correspondants.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPÉTENCES -->
+  <div class="block">
+    <div class="block-title">Compétences mobilisées</div>
+    <div class="block-bar"></div>
+    <div class="tags">
+      <span class="tag">Conception 2D</span>
+      <span class="tag">Découpe laser</span>
+      <span class="tag">Gravure laser</span>
+      <span class="tag">Trotec</span>
+      <span class="tag">Contreplaqué</span>
+      <span class="tag">Finger joint</span>
+      <span class="tag">FabLab</span>
+      <span class="tag">Sérigraphie laser</span>
+      <span class="tag">Gestion EPI</span>
+      <span class="tag">PA.COTTE</span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="projects-nav">
+    <a href="rack-palette.html" class="proj-nav-btn">← Rack de stockage</a>
+    <a href="index.html#projets" class="proj-nav-btn">Tous les projets</a>
+    <a href="montage-soudage.html" class="proj-nav-btn">Montage de soudage →</a>
+  </div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<footer>
+  <p>© 2025 <span>Evan COMA-GUENNOU</span> · BUT GMP · IUT de Carquefou</p>
+</footer>
+
+<script>
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
