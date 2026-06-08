@@ -79,9 +79,7 @@
     /* KANBAN */
     .kanban-demo { display: flex; flex-direction: column; gap: 0.6rem; max-width: 420px; }
     .kanban-row { display: flex; align-items: center; gap: 0.8rem; }
-    .kanban-arrow { width: 28px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 3px; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
-    .kanban-arrow.red { background: #DC2626; color: white; }
-    .kanban-label { background: var(--ink); color: var(--white); font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 3px; min-width: 120px; text-align: center; }
+    .kanban-label { background: var(--ink); color: var(--white); font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 3px; min-width: 140px; text-align: center; }
     .kanban-mat { font-size: 0.85rem; color: var(--ink-muted); }
 
     /* TAGS */
@@ -205,15 +203,19 @@
   <div class="block">
     <div class="block-title">Système d'étiquetage Kanban</div>
     <div class="block-bar"></div>
-    <p style="font-size:0.9rem;color:var(--ink-muted);margin-bottom:1.4rem;line-height:1.7;">Chaque niveau du rack est identifié par une étiquette glissée dans le rail aluminium. L'étiquette bicolore noir/rouge indique le matériau et son épaisseur. Lorsque le stock descend sous le seuil, la flèche rouge devient visible — signal visuel immédiat pour déclencher le réapprovisionnement.</p>
+    <p style="font-size:0.9rem;color:var(--ink-muted);margin-bottom:1.4rem;line-height:1.7;">Chaque niveau du rack est identifié par une étiquette glissée dans le rail aluminium indiquant le matériau et son épaisseur. Une feuille kanban est glissée sur la dernière planche de chaque référence. Lorsqu'un opérateur atteint cette feuille en prenant une planche, il l'apporte au bureau du FabLab — signal physique immédiat pour que le responsable déclenche le réapprovisionnement.</p>
     <div class="kanban-demo">
-      <div class="kanban-row"><div class="kanban-arrow red">←</div><div class="kanban-label">BOIS 1.2 mm</div><div class="kanban-mat">Contreplaqué fin</div></div>
-      <div class="kanban-row"><div class="kanban-arrow red">←</div><div class="kanban-label">BOIS 1.6 mm</div><div class="kanban-mat">Contreplaqué</div></div>
-      <div class="kanban-row"><div class="kanban-arrow red">←</div><div class="kanban-label">BOIS 2.5 mm</div><div class="kanban-mat">Contreplaqué</div></div>
-      <div class="kanban-row"><div class="kanban-arrow red">←</div><div class="kanban-label">BOIS 3 mm</div><div class="kanban-mat">Contreplaqué</div></div>
-      <div class="kanban-row"><div class="kanban-arrow red">←</div><div class="kanban-label">BOIS 3.6 mm</div><div class="kanban-mat">Contreplaqué</div></div>
-      <div class="kanban-row"><div class="kanban-arrow red">←</div><div class="kanban-label">BOIS 5 mm</div><div class="kanban-mat">Contreplaqué</div></div>
-      <div class="kanban-row"><div class="kanban-arrow red">←</div><div class="kanban-label">BOIS 10 mm</div><div class="kanban-mat">Contreplaqué épais</div></div>
+      <div class="kanban-row"><div class="kanban-label">BOIS 1.2 mm</div><div class="kanban-mat">Contreplaqué fin</div></div>
+      <div class="kanban-row"><div class="kanban-label">BOIS 1.6 mm</div><div class="kanban-mat">Contreplaqué</div></div>
+      <div class="kanban-row"><div class="kanban-label">BOIS 2.5 mm</div><div class="kanban-mat">Contreplaqué</div></div>
+      <div class="kanban-row"><div class="kanban-label">BOIS 3 mm</div><div class="kanban-mat">Contreplaqué</div></div>
+      <div class="kanban-row"><div class="kanban-label">BOIS 3.6 mm</div><div class="kanban-mat">Contreplaqué</div></div>
+      <div class="kanban-row"><div class="kanban-label">BOIS 5 mm</div><div class="kanban-mat">Contreplaqué</div></div>
+      <div class="kanban-row"><div class="kanban-label">BOIS 10 mm</div><div class="kanban-mat">Contreplaqué épais</div></div>
+      <div class="kanban-row"><div class="kanban-label">CARTON</div><div class="kanban-mat">Carton standard</div></div>
+      <div class="kanban-row"><div class="kanban-label">CARTON PLUME</div><div class="kanban-mat">Carton léger rigide</div></div>
+      <div class="kanban-row"><div class="kanban-label">PLEXIGLAS</div><div class="kanban-mat">Plastique transparent</div></div>
+      <div class="kanban-row"><div class="kanban-label">MOUSSE</div><div class="kanban-mat">Mousse diverse</div></div>
     </div>
   </div>
 
