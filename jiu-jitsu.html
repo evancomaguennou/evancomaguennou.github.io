@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jiu-jitsu brésilien — Evan COMA-GUENNOU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F5F3EF; --surface: #ECEAE4; --ink: #1A1916;
+      --ink-muted: #6B6860; --accent: #C4440A; --accent-light: #F5EDE8;
+      --line: #D4D0C8; --white: #FAFAF8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(245,243,239,0.94); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 62px;
+    }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--ink); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-back { font-size: 0.85rem; font-weight: 500; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    .page-hero {
+      padding: 100px 6vw 60px; background: var(--ink); color: var(--white);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 22px, rgba(255,255,255,0.03) 22px, rgba(255,255,255,0.03) 23px);
+    }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 700px; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: #A8A39A; margin-bottom: 1.2rem; }
+    .breadcrumb a { color: #C4845A; text-decoration: none; }
+    .page-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #C4845A; border: 1px solid #C4845A; padding: 0.28rem 0.8rem; border-radius: 2px; margin-bottom: 1rem; }
+    .page-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1rem; }
+    .page-title span { color: var(--accent); }
+    .page-desc { font-size: 1rem; color: #A8A39A; max-width: 540px; line-height: 1.75; }
+
+    .content { max-width: 900px; margin: 0 auto; padding: 60px 6vw; }
+    .block { margin-bottom: 3.5rem; }
+    .block-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.3rem; margin-bottom: 0.4rem; }
+    .block-bar { width: 30px; height: 3px; background: var(--accent); margin-bottom: 1.5rem; }
+
+    .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .gallery-grid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; transition: transform 0.2s; }
+    .gallery-grid img:hover { transform: scale(1.02); }
+    .gallery-grid img.wide { grid-column: span 2; aspect-ratio: 16/8; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .tag { font-size: 0.72rem; font-weight: 600; background: var(--accent-light); color: var(--accent); padding: 0.22rem 0.65rem; border-radius: 3px; }
+
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 999; align-items: center; justify-content: center; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 92vw; max-height: 92vh; object-fit: contain; border-radius: 4px; }
+    .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; color: white; font-size: 2rem; cursor: pointer; }
+
+    footer { background: var(--ink); color: #605C56; text-align: center; padding: 1.5rem 6vw; font-size: 0.8rem; }
+    footer span { color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-grid img.wide { grid-column: span 1; aspect-ratio: 4/3; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Evan <span>CG</span></a>
+  <a href="index.html#interets" class="nav-back">← Retour au portfolio</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Portfolio</a> › Jiu-jitsu brésilien</div>
+    <div class="page-tag">Sport · Centre d'intérêt</div>
+    <h1 class="page-title">Jiu-jitsu<br><span>brésilien</span></h1>
+    <p class="page-desc">Pratiquant de JJB, entre entraînements en club et compétitions. Une discipline qui demande autant de technique que de calme et de stratégie — des qualités qui rejoignent ma façon d'aborder mes projets.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="block">
+    <div class="block-title">Photos</div>
+    <div class="block-bar"></div>
+    <div class="gallery-grid">
+      <img src="jjb-1.jpg" alt="Groupe du club de JJB" class="wide" onclick="openLightbox(this.src)" />
+      <img src="jjb-2.png" alt="Compétition JJB — remise des résultats" onclick="openLightbox(this.src)" />
+      <img src="jjb-3.png" alt="Compétition JJB — championnat" onclick="openLightbox(this.src)" />
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">Ce que ça m'apporte</div>
+    <div class="block-bar"></div>
+    <p style="font-size:0.95rem;color:var(--ink-muted);line-height:1.8;max-width:680px;">
+      Le jiu-jitsu brésilien m'apprend la patience, l'analyse à froid et la gestion de l'échec — on perd beaucoup avant de progresser. C'est une discipline d'opposition qui demande de garder son calme sous pression, et de chercher la solution technique plutôt que la force brute. Des réflexes que je retrouve naturellement dans mon approche de la conception et de la résolution de problèmes techniques.
+    </p>
+    <div class="tags" style="margin-top:1.2rem;">
+      <span class="tag">Compétition</span>
+      <span class="tag">Technique</span>
+      <span class="tag">Calme sous pression</span>
+      <span class="tag">Persévérance</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<footer>
+  <p>© 2025 <span>Evan COMA-GUENNOU</span> · BUT GMP · IUT de Carquefou</p>
+</footer>
+
+<script>
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
